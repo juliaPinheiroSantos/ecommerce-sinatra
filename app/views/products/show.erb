@@ -40,4 +40,19 @@
       </p>
     <% end %>
   </div>
+  <% if logged_in? && current_user.id == @produto.vendedor_id %>
+    <div style="margin-top: 40px; padding-top: 20px; border-top: 2px dashed #fad2d9; display: flex; justify-content: space-between; align-items: center;">
+      
+      <a href="/produtos/<%= @produto.id %>/editar" class="btn-primary" style="background-color: #666; width: auto; text-decoration: none; padding: 10px 20px;">
+        Editar Dados
+      </a>
+
+      <form action="/produtos/<%= @produto.id %>/deletar" method="POST" style="margin: 0;" onsubmit="return confirm('Tem certeza que deseja remover este produto definitivamente?');">
+        <button type="submit" style="background-color: #c91e36; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; font-family: 'Poppins', sans-serif;">
+          Excluir Produto
+        </button>
+      </form>
+
+    </div>
+  <% end %>
 </div>
