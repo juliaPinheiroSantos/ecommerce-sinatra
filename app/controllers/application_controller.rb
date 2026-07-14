@@ -1,4 +1,8 @@
 class ApplicationController < Sinatra::Base
+  helpers AuthHelper
+  helpers FlashHelper
+  helpers ApplicationHelper
+
   configure do
     set :views, File.expand_path('../../views', __FILE__)
     set :public_folder, File.expand_path('../../../public', __FILE__)
@@ -8,6 +12,6 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/' do
-    "Testagem de rotas"
+    erb :'home/index', layout: :'layouts/application'
   end
 end

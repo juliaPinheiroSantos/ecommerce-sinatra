@@ -1,0 +1,25 @@
+<div style="text-align: center; padding: 40px 20px;">
+  <h2 style="font-family: 'Dancing Script', cursive; color: var(--brand-burgundy); font-size: 3rem; margin-bottom: 10px;">
+    Bem-vindo à Doçuras da Thalita!
+  </h2>
+  
+  <p style="font-size: 1.1rem; color: #555; max-width: 600px; margin: 0 auto;">
+    As melhores tortas artesanais e exclusivas para alegrar o seu dia. 
+    Tudo feito com muito carinho e ingredientes selecionados.
+  </p>
+  
+  <div style="margin-top: 40px;">
+    <% if logged_in? %>
+      <a href="/produtos" class="btn-primary" style="display: inline-block; width: auto; padding: 15px 30px; text-decoration: none;">
+        Ver Catálogo de Tortas
+      </a>
+    <% else %>
+      <div class="auth-card" style="margin: 0 auto; padding: 20px; box-shadow: none; border: 1px dashed var(--brand-pink);">
+        <p style="margin: 0; font-size: 1.1rem;">
+          Faça <a href="/login" style="color: var(--brand-burgundy); font-weight: bold;">login</a> ou 
+          <a href="/cadastro" style="color: var(--brand-burgundy); font-weight: bold;">cadastre-se</a> para fazer seu pedido.
+        </p>
+      </div>
+    <% end %>
+  </div>
+</div>

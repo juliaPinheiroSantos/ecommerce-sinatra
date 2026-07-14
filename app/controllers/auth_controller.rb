@@ -16,9 +16,11 @@ class AuthController < ApplicationController
 
     if @user.save
       session[:user_id] = @user.id
+      flash_message(:success, "Conta criada com sucesso! Bem-vindo(a), #{@user.nome}.")
       redirect '/'
     else
-      @erros = @user.errors.full_messages
+      erros_formatados = @user.errors.full_messages.join('<br>')
+      flash_message(:error, "<strong>Ops! Verifique os erros:</strong><br>#{erros_formatados}")
       erb :'auth/register', layout: :'layouts/application'
     end
   end
@@ -33,15 +35,17 @@ class AuthController < ApplicationController
 
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
+      flash_message(:success, "Que bom te ver por aqui, #{user.nome}!")
       redirect '/'
     else
-      @erro = "E-mail ou senha inválidos."
+      flash_message(:error, "E-mail ou senha inválidos. Tente novamente.")
       erb :'auth/login', layout: :'layouts/application'
     end
   end
 
   get '/logout' do
     session.clear
+    flash_message(:success, "Você saiu da sua conta. Até logo!")
     redirect '/login'
   end
 end

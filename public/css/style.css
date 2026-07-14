@@ -56,6 +56,7 @@ header nav p {
 main {
   flex: 1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 40px 20px;
@@ -156,6 +157,18 @@ main {
   text-align: left;
 }
 .alert-error ul { margin: 0; padding-left: 20px; }
+
+.alert-success, .alert-error {
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+.alert-success {
+  background-color: #e6f4ea;
+  color: #1e8e3e;
+  border: 1px solid #ceead6;
+}
 
 footer {
   text-align: center;
