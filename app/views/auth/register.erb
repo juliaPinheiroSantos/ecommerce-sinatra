@@ -1,42 +1,46 @@
-<h2>Cadastro de Usuário</h2>
+<div class="auth-card">
+  <h2>Nova Conta</h2>
 
-<% if @erros %>
-  <div style="color: red;">
-    <ul>
-      <% @erros.each do |erro| %>
-        <li><%= erro %></li>
-      <% end %>
-    </ul>
+  <% if @erros %>
+    <div class="alert-error">
+      <ul>
+        <% @erros.each do |erro| %>
+          <li><%= erro %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <form action="/cadastro" method="POST">
+    <div class="form-group">
+      <label>Nome Completo</label>
+      <input type="text" name="nome" required placeholder="Como quer ser chamado?">
+    </div>
+    
+    <div class="form-group">
+      <label>E-mail</label>
+      <input type="email" name="email" required placeholder="seu@email.com">
+    </div>
+
+    <div class="form-group">
+      <label>CPF</label>
+      <input type="text" name="cpf" required placeholder="000.000.000-00">
+    </div>
+
+    <div class="form-group">
+      <label>Telefone</label>
+      <input type="text" name="telefone" placeholder="(00) 00000-0000">
+    </div>
+
+    <div class="form-group">
+      <label>Criar Senha</label>
+      <input type="password" name="password" required placeholder="No mínimo 6 caracteres">
+    </div>
+
+    <button type="submit" class="btn-primary">Criar Conta</button>
+  </form>
+
+  <div class="auth-links">
+    <p>Já tem uma conta? <a href="/login">Faça Login</a></p>
   </div>
-<% end %>
-
-<form action="/cadastro" method="POST">
-  <div>
-    <label>Nome:</label><br>
-    <input type="text" name="nome" required>
-  </div>
-  
-  <div>
-    <label>E-mail:</label><br>
-    <input type="email" name="email" required>
-  </div>
-
-  <div>
-    <label>CPF:</label><br>
-    <input type="text" name="cpf" required>
-  </div>
-
-  <div>
-    <label>Telefone:</label><br>
-    <input type="text" name="telefone">
-  </div>
-
-  <div>
-    <label>Senha:</label><br>
-    <input type="password" name="password" required>
-  </div>
-
-  <button type="submit">Cadastrar</button>
-</form>
-
-<p>Já tem uma conta? <a href="/login">Faça Login</a></p>
+</div>
