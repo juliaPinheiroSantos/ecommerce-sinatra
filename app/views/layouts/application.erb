@@ -14,8 +14,12 @@
       <% if logged_in? %>
         <p>Bem-vindo(a), <a href="/perfil" style="color: var(--brand-pink);"><%= current_user.nome %></a>!</p>
         <a href="/">Início</a> | 
+        <a href="/produtos">Produtos</a> | 
+        <a href="/carrinho" style="color: var(--brand-pink);">Carrinho (<%= quantidade_itens_no_carrinho %>)</a> | 
         <a href="/logout">Sair</a>
       <% else %>
+        <a href="/">Início</a> | 
+        <a href="/produtos">Produtos</a> | 
         <a href="/login">Entrar</a> | 
         <a href="/cadastro">Cadastrar</a>
       <% end %>

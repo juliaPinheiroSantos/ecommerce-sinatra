@@ -22,9 +22,18 @@
 
   <div style="margin-top: 30px; text-align: center;">
     <% if @produto.estoque > 0 %>
-      <button class="btn-primary" disabled style="opacity: 0.5; cursor: not-allowed; width: auto;">
-        Adicionar ao Carrinho (Em Breve)
-      </button>
+      <form action="/carrinho/adicionar" method="POST" style="display: inline-block;">
+        <input type="hidden" name="produto_id" value="<%= @produto.id %>">
+        
+        <div style="margin-bottom: 15px;">
+          <label style="color: var(--brand-burgundy); font-weight: bold; margin-right: 10px;">Quantidade:</label>
+          <input type="number" name="quantidade" value="1" min="1" max="<%= @produto.estoque %>" style="width: 70px; padding: 8px; border-radius: 8px; border: 2px solid #fad2d9; text-align: center; font-family: 'Poppins', sans-serif;">
+        </div>
+        
+        <button type="submit" class="btn-primary" style="width: auto; padding: 12px 30px;">
+          Adicionar ao Carrinho
+        </button>
+      </form>
     <% else %>
       <p style="color: #c91e36; font-weight: bold; padding: 10px; background-color: #ffeef0; border-radius: 8px;">
         Produto Esgotado no Momento

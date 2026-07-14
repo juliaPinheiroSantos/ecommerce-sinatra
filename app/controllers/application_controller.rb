@@ -2,6 +2,7 @@ class ApplicationController < Sinatra::Base
   helpers AuthHelper
   helpers FlashHelper
   helpers ApplicationHelper
+  helpers CartHelper
 
   configure do
     set :views, File.expand_path('../../views', __FILE__)
