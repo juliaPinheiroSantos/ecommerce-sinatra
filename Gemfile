@@ -9,6 +9,7 @@ gem "sinatra-activerecord"
 gem "sqlite3"
 gem "rackup"
 gem "rake" 
+gem "bcrypt"
 
 group :development, :test do
   gem 'irb'
