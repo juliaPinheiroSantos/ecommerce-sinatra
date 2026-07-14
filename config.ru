@@ -1,4 +1,5 @@
-# config.ru
-require './app'
+require './config/environment'
 
-run EcommerceApp
+use AuthController
+
+run ApplicationController

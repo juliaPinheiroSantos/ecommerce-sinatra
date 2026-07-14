@@ -1,0 +1,23 @@
+<h2>Acesse sua conta</h2>
+
+<% if @erro %>
+  <div style="color: red;">
+    <p><%= @erro %></p>
+  </div>
+<% end %>
+
+<form action="/login" method="POST">
+  <div>
+    <label>E-mail:</label><br>
+    <input type="email" name="email" required>
+  </div>
+
+  <div>
+    <label>Senha:</label><br>
+    <input type="password" name="password" required>
+  </div>
+
+  <button type="submit">Entrar</button>
+</form>
+
+<p>Ainda não tem conta? <a href="/cadastro">Cadastre-se aqui</a></p>
