@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_14_194912) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_14_195306) do
   create_table "produtos", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "descricao"
@@ -33,5 +33,19 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_14_194912) do
     t.index ["email"], name: "index_usuarios_on_email", unique: true
   end
 
+  create_table "vendas", force: :cascade do |t|
+    t.integer "comprador_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "data", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.string "status", default: "pendente", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "valor_total", precision: 10, scale: 2, default: "0.0", null: false
+    t.integer "vendedor_id", null: false
+    t.index ["comprador_id"], name: "index_vendas_on_comprador_id"
+    t.index ["vendedor_id"], name: "index_vendas_on_vendedor_id"
+  end
+
   add_foreign_key "produtos", "usuarios", column: "vendedor_id"
+  add_foreign_key "vendas", "usuarios", column: "comprador_id"
+  add_foreign_key "vendas", "usuarios", column: "vendedor_id"
 end
