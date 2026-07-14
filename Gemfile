@@ -9,3 +9,8 @@ gem "sinatra-activerecord"
 gem "sqlite3"
 gem "rackup"
 gem "rake" 
+
+group :development, :test do
+  gem 'irb'
+  gem 'fiddle'
+end
