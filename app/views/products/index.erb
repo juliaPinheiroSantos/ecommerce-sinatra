@@ -1,0 +1,24 @@
+<div style="padding: 20px;">
+  <h2 style="font-family: 'Dancing Script', cursive; color: var(--brand-burgundy); font-size: 3rem; text-align: center; margin-bottom: 30px;">
+    Nossas Tortas
+  </h2>
+
+  <div class="products-grid">
+    <% if @produtos.empty? %>
+      <p style="text-align: center; grid-column: 1 / -1;">Não há produtos disponíveis no momento.</p>
+    <% else %>
+      <% @produtos.each do |produto| %>
+        <div class="product-card">
+          <div>
+            <h3 class="product-title"><%= produto.nome %></h3>
+            <p class="product-price"><%= formatar_moeda(produto.preco) %></p>
+          </div>
+          
+          <a href="/produtos/<%= produto.id %>" class="btn-primary" style="text-decoration: none; display: inline-block; width: auto; padding: 10px 15px; font-size: 0.9rem;">
+            Ver Detalhes
+          </a>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

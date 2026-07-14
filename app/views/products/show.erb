@@ -1,0 +1,34 @@
+<div class="auth-card" style="max-width: 600px; text-align: left;">
+  <a href="/produtos" style="color: var(--brand-burgundy); text-decoration: none; font-size: 0.9rem; font-weight: bold;">&larr; Voltar ao catálogo</a>
+
+  <h2 style="font-family: 'Dancing Script', cursive; color: var(--brand-burgundy); font-size: 2.5rem; margin-top: 15px; margin-bottom: 5px;">
+    <%= @produto.nome %>
+  </h2>
+  
+  <p style="font-size: 1.5rem; color: var(--brand-pink); font-weight: bold; margin-top: 0;">
+    <%= formatar_moeda(@produto.preco) %>
+  </p>
+
+  <div style="margin-top: 20px; line-height: 1.6;">
+    <p><strong>Sobre a torta:</strong><br> 
+      <%= @produto.descricao.nil? || @produto.descricao.empty? ? "Sem descrição fornecida." : @produto.descricao %>
+    </p>
+    <p><strong>Disponibilidade:</strong> <%= @produto.estoque %> unidades em estoque</p>
+    
+    <p style="font-size: 0.8rem; color: #777; margin-top: 20px;">
+      Feito por: <%= @produto.vendedor.nome %>
+    </p>
+  </div>
+
+  <div style="margin-top: 30px; text-align: center;">
+    <% if @produto.estoque > 0 %>
+      <button class="btn-primary" disabled style="opacity: 0.5; cursor: not-allowed; width: auto;">
+        Adicionar ao Carrinho (Em Breve)
+      </button>
+    <% else %>
+      <p style="color: #c91e36; font-weight: bold; padding: 10px; background-color: #ffeef0; border-radius: 8px;">
+        Produto Esgotado no Momento
+      </p>
+    <% end %>
+  </div>
+</div>
