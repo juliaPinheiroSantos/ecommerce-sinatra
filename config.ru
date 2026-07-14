@@ -1,2 +1,4 @@
-require "./app"
-run Sinatra::Application
+# config.ru
+require './app'
+
+run EcommerceApp
