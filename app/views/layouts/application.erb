@@ -12,7 +12,7 @@
     <h1>Doçuras da Thalita</h1>
     <nav>
       <% if logged_in? %>
-        <p>Bem-vindo(a), <%= current_user.nome %>!</p>
+        <p>Bem-vindo(a), <a href="/perfil" style="color: var(--brand-pink);"><%= current_user.nome %></a>!</p>
         <a href="/">Início</a> | 
         <a href="/logout">Sair</a>
       <% else %>
