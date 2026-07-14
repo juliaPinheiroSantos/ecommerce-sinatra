@@ -16,7 +16,7 @@
           <th style="padding: 12px 8px;">Comprador</th>
           <th style="padding: 12px 8px; text-align: right;">Total</th>
           <th style="padding: 12px 8px; text-align: center;">Status</th>
-        </tr>
+          <th style="padding: 12px 8px; text-align: center;">Ações</th> </tr>
       </thead>
       <tbody>
         <% @vendas.each do |venda| %>
@@ -37,6 +37,26 @@
               <span style="background-color: var(--brand-light-pink); color: var(--brand-burgundy); padding: 5px 10px; border-radius: 12px; font-size: 0.85rem; font-weight: 600;">
                 <%= traduzir_status(venda.status) %>
               </span>
+            </td>
+
+            <td style="padding: 15px 8px; text-align: center; display: flex; justify-content: center; gap: 10px;">
+              
+              <% unless ['entregue', 'cancelada'].include?(venda.status) %>
+                <form action="/vendas/<%= venda.id %>/avancar" method="POST" style="margin: 0;">
+                  <button type="submit" style="background-color: #1e8e3e; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.8rem;">
+                    Avançar
+                  </button>
+                </form>
+              <% end %>
+
+              <% if ['pendente', 'paga'].include?(venda.status) %>
+                <form action="/vendas/<%= venda.id %>/cancelar" method="POST" style="margin: 0;" onsubmit="return confirm('Tem certeza que deseja cancelar este pedido?');">
+                  <button type="submit" style="background-color: #c91e36; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.8rem;">
+                    Cancelar
+                  </button>
+                </form>
+              <% end %>
+
             </td>
           </tr>
         <% end %>

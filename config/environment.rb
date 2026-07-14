@@ -10,9 +10,9 @@ require File.expand_path('../database', __FILE__)
 
 APP_ROOT = File.expand_path('../../', __FILE__)
 
-Dir.glob(File.join(APP_ROOT, 'app', 'helpers', '*.rb')).each { |f| require f }
-Dir.glob(File.join(APP_ROOT, 'app', 'services', '*.rb')).each { |f| require f }
-Dir.glob(File.join(APP_ROOT, 'app', 'models', '*.rb')).each { |f| require f }
-Dir.glob(File.join(APP_ROOT, 'app', 'controllers', '*.rb')).each { |f| require f }
+Dir.glob('./app/helpers/*.rb').each { |file| require file }
+Dir.glob('./app/models/*.rb').each { |file| require file }
+Dir.glob('./app/services/*.rb').each { |file| require file } 
+Dir.glob('./app/controllers/*.rb').each { |file| require file }
 
 require File.expand_path('../routes', __FILE__)
