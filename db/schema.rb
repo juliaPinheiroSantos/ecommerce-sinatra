@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_14_195306) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_14_195632) do
+  create_table "itens_venda", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.decimal "preco_unitario", precision: 10, scale: 2, null: false
+    t.integer "produto_id", null: false
+    t.integer "quantidade", default: 1, null: false
+    t.datetime "updated_at", null: false
+    t.integer "venda_id", null: false
+    t.index ["produto_id"], name: "index_itens_venda_on_produto_id"
+    t.index ["venda_id"], name: "index_itens_venda_on_venda_id"
+  end
+
   create_table "produtos", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "descricao"
@@ -45,6 +56,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_14_195306) do
     t.index ["vendedor_id"], name: "index_vendas_on_vendedor_id"
   end
 
+  add_foreign_key "itens_venda", "produtos"
+  add_foreign_key "itens_venda", "vendas"
   add_foreign_key "produtos", "usuarios", column: "vendedor_id"
   add_foreign_key "vendas", "usuarios", column: "comprador_id"
   add_foreign_key "vendas", "usuarios", column: "vendedor_id"
