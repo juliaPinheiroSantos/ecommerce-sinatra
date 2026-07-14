@@ -1,7 +1,6 @@
 class CreateVendas < ActiveRecord::Migration[8.1]
   def change
     create_table :vendas do |t|
-      # Chaves estrangeiras apontando explicitamente para a tabela de usuarios
       t.references :comprador, null: false, foreign_key: { to_table: :usuarios }
       t.references :vendedor, null: false, foreign_key: { to_table: :usuarios }
       
