@@ -45,4 +45,27 @@ class CartController < ApplicationController
     flash_message(:success, "Produto removido do carrinho.")
     redirect '/carrinho'
   end
+
+  post '/checkout' do
+    require_login!
+    
+    if carrinho.empty?
+      flash_message(:error, "Seu carrinho está vazio. Adicione algumas tortas primeiro!")
+      redirect '/produtos'
+    end
+
+    begin
+      servico = CheckoutService.new(current_user, itens_do_carrinho)
+      venda = servico.call
+      
+      session.delete(:cart)
+      
+      flash_message(:success, "Pedido ##{venda.id} realizado com sucesso! Total: #{formatar_moeda(venda.valor_total)}")
+      redirect '/perfil' 
+      
+    rescue => e
+      flash_message(:error, "Erro ao processar o pedido: #{e.message}")
+      redirect '/carrinho'
+    end
+  end
 end
