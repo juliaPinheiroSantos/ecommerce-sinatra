@@ -4,23 +4,23 @@
   <form action="/produtos/<%= @produto.id %>" method="POST">
     <div class="form-group">
       <label>Nome do Produto</label>
-      <input type="text" name="nome" value="<%= @produto.nome %>" required>
+      <input type="text" name="nome" id="nome" value="<%= @produto.nome %>" required>
     </div>
 
     <div class="form-group">
       <label>Descrição</label>
-      <textarea name="descricao" rows="3" style="width: 100%; padding: 12px; border: 2px solid #fad2d9; border-radius: 8px; box-sizing: border-box; font-family: 'Poppins', sans-serif; resize: vertical;"><%= @produto.descricao %></textarea>
+      <textarea name="descricao" id="descricao" rows="3" style="width: 100%; padding: 12px; border: 2px solid #fad2d9; border-radius: 8px; box-sizing: border-box; font-family: 'Poppins', sans-serif; resize: vertical;"><%= @produto.descricao %></textarea>
     </div>
 
     <div style="display: flex; gap: 15px;">
       <div class="form-group" style="flex: 1;">
         <label>Preço (R$)</label>
-        <input type="number" name="preco" step="0.01" min="0.01" value="<%= @produto.preco.to_f %>" required>
+        <input type="number" name="preco" id="preco" step="0.01" min="0.01" value="<%= @produto.preco.to_f %>" required>
       </div>
 
       <div class="form-group" style="flex: 1;">
         <label>Estoque Atual</label>
-        <input type="number" name="estoque" step="1" min="0" value="<%= @produto.estoque %>" required>
+        <input type="number" name="estoque" id="estoque" step="1" min="0" value="<%= @produto.estoque %>" required>
       </div>
     </div>
 
