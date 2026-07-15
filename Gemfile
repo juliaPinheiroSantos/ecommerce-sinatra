@@ -10,6 +10,7 @@ gem "sqlite3"
 gem "rackup"
 gem "rake" 
 gem "bcrypt"
+gem "rspec"
 
 group :development, :test do
   gem 'irb'
