@@ -1,18 +1,18 @@
 class ProfileController < ApplicationController
   helpers AuthHelper
-  before do
-    require_login!
-  end
 
   get '/perfil' do
+    require_login!
     erb :'profile/show', layout: :'layouts/application'
   end
 
   get '/perfil/editar' do
+    require_login!
     erb :'profile/edit', layout: :'layouts/application'
   end
 
   post '/perfil/editar' do
+    require_login!
     @user = current_user
     @user.nome = params[:nome]
     @user.telefone = params[:telefone]
