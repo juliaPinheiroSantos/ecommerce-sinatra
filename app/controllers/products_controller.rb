@@ -4,12 +4,12 @@ class ProductsController < ApplicationController
   helpers FlashHelper
 
   get '/produtos/novo' do
-    require_login!
+    require_vendedor!
     erb :'products/new', layout: :'layouts/application'
   end
 
   post '/produtos' do
-    require_login!
+    require_vendedor!
     
     @produto = Product.new(
       nome: params[:nome],
@@ -33,7 +33,6 @@ class ProductsController < ApplicationController
     erb :'products/index', layout: :'layouts/application'
   end
 
-  # --- READ (Detalhes) ---
   get '/produtos/:id' do
     @produto = Product.find_by(id: params[:id])
     
@@ -45,12 +44,10 @@ class ProductsController < ApplicationController
     end
   end
 
-  # --- UPDATE (Formulário) ---
   get '/produtos/:id/editar' do
-    require_login!
+    require_vendedor!
     @produto = Product.find_by(id: params[:id])
     
-    # Bloqueia se o produto não existir ou se não for do usuário logado
     if @produto.nil? || @produto.vendedor_id != current_user.id
       flash_message(:error, "Você não tem permissão para editar este produto.")
       redirect '/produtos'
@@ -59,7 +56,6 @@ class ProductsController < ApplicationController
     erb :'products/edit', layout: :'layouts/application'
   end
 
-  # --- UPDATE (Processamento) ---
   post '/produtos/:id' do
     require_login!
     @produto = Product.find_by(id: params[:id])
@@ -81,7 +77,7 @@ class ProductsController < ApplicationController
   end
 
   post '/produtos/:id/deletar' do
-    require_login!
+    require_vendedor!
     @produto = Product.find_by(id: params[:id])
     
     if @produto && @produto.vendedor_id == current_user.id

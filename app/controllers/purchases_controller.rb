@@ -6,7 +6,7 @@ class PurchasesController < ApplicationController
   helpers FlashHelper
 
   get '/compras' do
-    require_login!
+    require_cliente!
     
     @compras = Sale.where(comprador_id: current_user.id).order(created_at: :desc)
     
@@ -14,7 +14,7 @@ class PurchasesController < ApplicationController
   end
 
   get '/compras/:id' do
-    require_login!
+    require_cliente!
     
     @compra = Sale.find_by(id: params[:id], comprador_id: current_user.id)
     
@@ -28,7 +28,7 @@ class PurchasesController < ApplicationController
   end
 
   post '/compras/:id/cancelar' do
-    require_login!
+    require_cliente!
     
     @compra = Sale.find_by(id: params[:id], comprador_id: current_user.id)
 

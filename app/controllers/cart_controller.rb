@@ -5,12 +5,14 @@ class CartController < ApplicationController
   helpers ApplicationHelper
 
   get '/carrinho' do
+    require_cliente!
     @itens = itens_do_carrinho
     @total = total_do_carrinho
     erb :'cart/show', layout: :'layouts/application'
   end
 
   post '/carrinho/adicionar' do
+    require_cliente!
     produto_id = params[:produto_id].to_i
     quantidade = params[:quantidade].to_i
     quantidade = 1 if quantidade <= 0
@@ -39,6 +41,7 @@ class CartController < ApplicationController
   end
 
   post '/carrinho/remover' do
+    require_cliente!
     produto_id = params[:produto_id].to_i
     carrinho.delete(produto_id)
     
@@ -47,7 +50,7 @@ class CartController < ApplicationController
   end
 
   post '/checkout' do
-    require_login!
+    require_cliente!
     
     if carrinho.empty?
       flash_message(:error, "Seu carrinho está vazio. Adicione algumas tortas primeiro!")

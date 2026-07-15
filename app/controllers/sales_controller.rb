@@ -6,7 +6,7 @@ class SalesController < ApplicationController
   helpers FlashHelper
 
   get '/vendas' do
-    require_login!
+    require_vendedor!
     
     @vendas = current_user.vendas_como_vendedor.order(created_at: :desc)
     
@@ -14,7 +14,7 @@ class SalesController < ApplicationController
   end
 
   post '/vendas/:id/avancar' do
-    require_login!
+    require_vendedor!
     venda = current_user.vendas_como_vendedor.find_by(id: params[:id])
 
     if venda
@@ -32,7 +32,7 @@ class SalesController < ApplicationController
   end
 
   post '/vendas/:id/cancelar' do
-    require_login!
+    require_vendedor!
     
     venda = current_user.vendas_como_vendedor.find_by(id: params[:id])
 
