@@ -1,0 +1,49 @@
+<div class="auth-card" style="max-width: 900px; text-align: left; margin: 20px auto;">
+  <h2 style="font-family: 'Dancing Script', cursive; color: var(--brand-burgundy); font-size: 3rem; text-align: center; margin-bottom: 20px;">
+    Minhas Compras
+  </h2>
+
+  <% if @compras.empty? %>
+    <div style="text-align: center; padding: 30px;">
+      <p style="font-size: 1.2rem; color: #666;">Você ainda não fez nenhum pedido conosco.</p>
+      <a href="/produtos" class="btn-primary" style="display: inline-block; width: auto; text-decoration: none;">Ver Catálogo de Tortas</a>
+    </div>
+  <% else %>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+      <thead>
+        <tr style="border-bottom: 2px solid var(--brand-pink); color: var(--brand-burgundy); text-align: left;">
+          <th style="padding: 12px 8px;">Nº do Pedido</th>
+          <th style="padding: 12px 8px;">Data</th>
+          <th style="padding: 12px 8px; text-align: right;">Total</th>
+          <th style="padding: 12px 8px; text-align: center;">Status</th>
+          <th style="padding: 12px 8px; text-align: center;">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @compras.each do |compra| %>
+          <tr style="border-bottom: 1px solid #f2d1d6;">
+            <td style="padding: 15px 8px; font-weight: bold; color: var(--brand-burgundy);">
+              #<%= compra.id %>
+            </td>
+            <td style="padding: 15px 8px;">
+              <%= formatar_data(compra.data) %>
+            </td>
+            <td style="padding: 15px 8px; text-align: right; font-weight: bold;">
+              <%= formatar_moeda(compra.valor_total) %>
+            </td>
+            <td style="padding: 15px 8px; text-align: center;">
+              <span style="background-color: var(--brand-light-pink); color: var(--brand-burgundy); padding: 5px 10px; border-radius: 12px; font-size: 0.85rem; font-weight: 600;">
+                <%= traduzir_status(compra.status) %>
+              </span>
+            </td>
+            <td style="padding: 15px 8px; text-align: center;">
+              <a href="/compras/<%= compra.id %>" style="background-color: var(--brand-burgundy); color: white; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: bold;">
+                Detalhes
+              </a>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>
