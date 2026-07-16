@@ -1,0 +1,27 @@
+<div class="auth-card">
+  <h2>Entrar</h2>
+
+  <% if @erro %>
+    <div class="alert-error">
+      <p style="margin: 0;"><%= @erro %></p>
+    </div>
+  <% end %>
+
+  <form action="/login" method="POST">
+    <div class="form-group">
+      <label for ="email">Email</label>
+      <input type="email" name="email" id="email" required placeholder="seu@email.com">
+    </div>
+
+    <div class="form-group">
+      <label for="senha">Senha</label>
+      <input type="password" name="password" id="senha" required placeholder="Sua senha">
+    </div>
+
+    <button type="submit" class="btn-primary">Acessar Conta</button>
+  </form>
+
+  <div class="auth-links">
+    <p>Ainda não tem conta? <a href="/cadastro">Cadastre-se aqui</a></p>
+  </div>
+</div>

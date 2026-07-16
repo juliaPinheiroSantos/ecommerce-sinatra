@@ -1,0 +1,58 @@
+<div class="auth-card" style="max-width: 600px; text-align: left;">
+  <a href="/produtos" style="color: var(--brand-burgundy); text-decoration: none; font-size: 0.9rem; font-weight: bold;">&larr; Voltar ao catálogo</a>
+
+  <h2 style="font-family: 'Dancing Script', cursive; color: var(--brand-burgundy); font-size: 2.5rem; margin-top: 15px; margin-bottom: 5px;">
+    <%= @produto.nome %>
+  </h2>
+  
+  <p style="font-size: 1.5rem; color: var(--brand-pink); font-weight: bold; margin-top: 0;">
+    <%= formatar_moeda(@produto.preco) %>
+  </p>
+
+  <div style="margin-top: 20px; line-height: 1.6;">
+    <p><strong>Sobre a torta:</strong><br> 
+      <%= @produto.descricao.nil? || @produto.descricao.empty? ? "Sem descrição fornecida." : @produto.descricao %>
+    </p>
+    <p><strong>Disponibilidade:</strong> <%= @produto.estoque %> unidades em estoque</p>
+    
+    <p style="font-size: 0.8rem; color: #777; margin-top: 20px;">
+      Feito por: <%= @produto.vendedor.nome %>
+    </p>
+  </div>
+
+  <div style="margin-top: 30px; text-align: center;">
+    <% if @produto.estoque > 0 %>
+      <form action="/carrinho/adicionar" method="POST" style="display: inline-block;">
+        <input type="hidden" name="produto_id" value="<%= @produto.id %>">
+        
+        <div style="margin-bottom: 15px;">
+          <label style="color: var(--brand-burgundy); font-weight: bold; margin-right: 10px;">Quantidade:</label>
+          <input type="number" name="quantidade" value="1" min="1" max="<%= @produto.estoque %>" style="width: 70px; padding: 8px; border-radius: 8px; border: 2px solid #fad2d9; text-align: center; font-family: 'Poppins', sans-serif;">
+        </div>
+        
+        <button type="submit" class="btn-primary" style="width: auto; padding: 12px 30px;">
+          Adicionar ao Carrinho
+        </button>
+      </form>
+    <% else %>
+      <p style="color: #c91e36; font-weight: bold; padding: 10px; background-color: #ffeef0; border-radius: 8px;">
+        Produto Esgotado no Momento
+      </p>
+    <% end %>
+  </div>
+  <% if logged_in? && current_user.id == @produto.vendedor_id %>
+    <div style="margin-top: 40px; padding-top: 20px; border-top: 2px dashed #fad2d9; display: flex; justify-content: space-between; align-items: center;">
+      
+      <a href="/produtos/<%= @produto.id %>/editar" class="btn-primary" style="background-color: #666; width: auto; text-decoration: none; padding: 10px 20px;">
+        Editar Dados
+      </a>
+
+      <form action="/produtos/<%= @produto.id %>/deletar" method="POST" style="margin: 0;" onsubmit="return confirm('Tem certeza que deseja remover este produto definitivamente?');">
+        <button type="submit" style="background-color: #c91e36; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; font-family: 'Poppins', sans-serif;">
+          Excluir Produto
+        </button>
+      </form>
+
+    </div>
+  <% end %>
+</div>

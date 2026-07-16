@@ -1,0 +1,44 @@
+<div style="padding: 20px;">
+  <h2 style="font-family: 'Dancing Script', cursive; color: var(--brand-burgundy); font-size: 3rem; text-align: center; margin-bottom: 30px;">
+    Nossas Tortas
+  </h2>
+
+  <% if logged_in? %>
+    <div style="text-align: center; margin-bottom: 20px;">
+      <a href="/produtos/novo" class="cadastrar-produto btn-primary" style="text-decoration: none; display: inline-block; width: auto;">+ Cadastrar Novo Produto</a>
+    </div>
+  <% end %>
+
+  <form action="/produtos" method="GET" style="max-width: 400px; margin: 0 auto 30px; display: flex; gap: 10px;">
+    <div class="form-group" style="flex: 1; margin: 0;">
+      <label for="busca" style="position: absolute; left: -9999px;">Buscar produtos</label>
+      <input type="text" name="busca" id="busca" value="<%= @termo_busca %>" placeholder="Buscar tortas pelo nome..." style="width: 100%; padding: 10px; border-radius: 8px; border: 2px solid #fad2d9; box-sizing: border-box; font-family: 'Poppins', sans-serif;">
+    </div>
+    <button type="submit" class="btn-primary" style="width: auto; padding: 10px 20px;">Buscar</button>
+  </form>
+
+  <div class="products-grid">
+    <% if @produtos.empty? %>
+      <p style="text-align: center; grid-column: 1 / -1;">
+        <% if @termo_busca.present? %>
+          Nenhum produto encontrado para "<%= @termo_busca %>".
+        <% else %>
+          Não há produtos disponíveis no momento.
+        <% end %>
+      </p>
+    <% else %>
+      <% @produtos.each do |produto| %>
+        <div class="product-card">
+          <div>
+            <h3 class="product-title"><%= produto.nome %></h3>
+            <p class="product-price"><%= formatar_moeda(produto.preco) %></p>
+          </div>
+          
+          <a href="/produtos/<%= produto.id %>" class="btn-primary" style="text-decoration: none; display: inline-block; width: auto; padding: 10px 15px; font-size: 0.9rem;">
+            Ver Detalhes
+          </a>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<div class="auth-card" style="max-width: 900px; text-align: left; margin: 20px auto;">
+  <h2 style="font-family: 'Dancing Script', cursive; color: var(--brand-burgundy); font-size: 3rem; text-align: center; margin-bottom: 20px;">
+    Vendas Recebidas
+  </h2>
+
+  <% if @vendas.empty? %>
+    <div style="text-align: center; padding: 30px;">
+      <p style="font-size: 1.2rem; color: #666;">Você ainda não recebeu nenhum pedido.</p>
+    </div>
+  <% else %>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+      <thead>
+        <tr style="border-bottom: 2px solid var(--brand-pink); color: var(--brand-burgundy); text-align: left;">
+          <th style="padding: 12px 8px;">Nº do Pedido</th>
+          <th style="padding: 12px 8px;">Data</th>
+          <th style="padding: 12px 8px;">Comprador</th>
+          <th style="padding: 12px 8px; text-align: right;">Total</th>
+          <th style="padding: 12px 8px; text-align: center;">Status</th>
+          <th style="padding: 12px 8px; text-align: center;">Ações</th> </tr>
+      </thead>
+      <tbody>
+        <% @vendas.each do |venda| %>
+          <tr style="border-bottom: 1px solid #f2d1d6;">
+            <td style="padding: 15px 8px; font-weight: bold; color: var(--brand-burgundy);">
+              #<%= venda.id %>
+            </td>
+            <td style="padding: 15px 8px;">
+              <%= formatar_data(venda.data) %>
+            </td>
+            <td style="padding: 15px 8px;">
+              <%= venda.comprador.nome %>
+            </td>
+            <td style="padding: 15px 8px; text-align: right; font-weight: bold;">
+              <%= formatar_moeda(venda.valor_total) %>
+            </td>
+            <td style="padding: 15px 8px; text-align: center;">
+              <span style="background-color: var(--brand-light-pink); color: var(--brand-burgundy); padding: 5px 10px; border-radius: 12px; font-size: 0.85rem; font-weight: 600;">
+                <%= traduzir_status(venda.status) %>
+              </span>
+            </td>
+
+            <td style="padding: 15px 8px; text-align: center; display: flex; justify-content: center; gap: 10px;">
+              
+              <% unless ['entregue', 'cancelada'].include?(venda.status) %>
+                <form action="/vendas/<%= venda.id %>/avancar" method="POST" style="margin: 0;">
+                  <button type="submit" style="background-color: #1e8e3e; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.8rem;">
+                    Avançar
+                  </button>
+                </form>
+              <% end %>
+
+              <% if ['pendente', 'paga'].include?(venda.status) %>
+                <form action="/vendas/<%= venda.id %>/cancelar" method="POST" style="margin: 0;" onsubmit="return confirm('Tem certeza que deseja cancelar este pedido?');">
+                  <button type="submit" style="background-color: #c91e36; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.8rem;">
+                    Cancelar
+                  </button>
+                </form>
+              <% end %>
+
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

@@ -1,0 +1,64 @@
+<div class="auth-card" style="max-width: 800px; text-align: left;">
+  <h2 style="font-family: 'Dancing Script', cursive; color: var(--brand-burgundy); font-size: 3rem; text-align: center; margin-bottom: 20px;">
+    Meu Carrinho
+  </h2>
+
+  <% if @itens.empty? %>
+    <div style="text-align: center; padding: 40px 20px;">
+      <p style="font-size: 1.2rem; color: #666;">Seu carrinho de doces está vazio.</p>
+      <a href="/produtos" class="btn-primary" style="display: inline-block; width: auto; text-decoration: none; padding: 12px 25px;">Ver catálogo de tortas</a>
+    </div>
+  <% else %>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+      <thead>
+        <tr style="border-bottom: 2px solid var(--brand-pink); color: var(--brand-burgundy); text-align: left;">
+          <th style="padding: 10px 5px;">Produto</th>
+          <th style="padding: 10px 5px; text-align: center;">Qtd.</th>
+          <th style="padding: 10px 5px; text-align: right;">Preço Unitário</th>
+          <th style="padding: 10px 5px; text-align: right;">Subtotal</th>
+          <th style="padding: 10px 5px; text-align: center;">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @itens.each do |produto, quantidade| %>
+          <tr style="border-bottom: 1px solid #f2d1d6;">
+            <td style="padding: 15px 5px; font-weight: 600; color: var(--brand-burgundy);">
+              <%= produto.nome %>
+            </td>
+            <td style="padding: 15px 5px; text-align: center;">
+              <%= quantidade %>
+            </td>
+            <td style="padding: 15px 5px; text-align: right;">
+              <%= formatar_moeda(produto.preco) %>
+            </td>
+            <td style="padding: 15px 5px; text-align: right; font-weight: 600;">
+              <%= formatar_moeda(produto.preco * quantidade) %>
+            </td>
+            <td style="padding: 15px 5px; text-align: center;">
+              <form action="/carrinho/remover" method="POST" style="margin: 0;">
+                <input type="hidden" name="produto_id" value="<%= produto.id %>">
+                <button type="submit" style="background: none; border: none; color: #c91e36; font-weight: bold; cursor: pointer; font-family: 'Poppins', sans-serif;">
+                  Remover
+                </button>
+              </form>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px solid var(--brand-pink); padding-top: 20px;">
+      <a href="/produtos" style="color: var(--brand-burgundy); text-decoration: none; font-weight: bold;">&larr; Continuar Comprando</a>
+      <div style="text-align: right;">
+        <p style="font-size: 1.4rem; color: var(--brand-burgundy); margin: 0; font-weight: bold;">
+          Total: <span style="color: var(--brand-pink);"><%= formatar_moeda(@total) %></span>
+        </p>
+        <form action="/checkout" method="POST" style="margin-top: 10px;">
+          <button type="submit" class="btn-primary" style="width: auto; padding: 12px 25px; font-size: 1.1rem;">
+            Finalizar Pedido
+          </button>
+        </form>
+      </div>
+    </div>
+  <% end %>
+</div>
