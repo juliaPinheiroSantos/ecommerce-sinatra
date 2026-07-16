@@ -5,7 +5,11 @@ require "sinatra/flash"
 enable :sessions
 
 get "/" do
-    "Iniciando o projeto de E-commerce"
+  erb :vitrine
+end
+
+get "/login" do
+  erb :login
 end
 
 get "/cadastro" do
