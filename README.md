@@ -14,11 +14,11 @@ Sistema de **e-commerce e gestão** para uma confeitaria artesanal, desenvolvido
 
 ## Funcionalidades principais
 
-- Cadastro e autenticação de usuários, com dois perfis de acesso: **cliente** e **vendedor**
-- Catálogo de produtos (tortas) com detalhes, preço e estoque
+- Cadastro e autenticação de usuários — qualquer usuário pode publicar produtos e também comprar; o papel de "vendedor" ou "comprador" é apenas inferido pelas associações (produtos cadastrados / compras realizadas), não um campo fixo de conta
+- Catálogo de produtos (tortas) com busca por nome, detalhes, preço e estoque
 - Carrinho de compras e finalização de pedidos
-- Gestão de vendas pelo vendedor, com avanço e cancelamento de status até a entrega
-- Histórico de compras do cliente
+- Gestão de vendas recebidas, com avanço e cancelamento de status até a entrega
+- Histórico de compras do usuário
 
 ---
 
@@ -67,6 +67,28 @@ Se o `bundle install` terminar exibindo `Bundle complete!` junto com a contagem 
 
 ---
 
+## Configuração de variáveis de ambiente
+
+A aplicação usa a variável `SESSION_SECRET` para assinar o cookie de sessão. Ela **não fica no código-fonte** — precisa ser definida em um arquivo `.env` local (que não é versionado no Git).
+
+```bash
+# Copie o arquivo de exemplo
+cp .env.example .env        # Linux/Mac/WSL
+copy .env.example .env      # Windows (PowerShell/cmd)
+```
+
+Por padrão o `.env.example` já vem com um valor de exemplo funcional para uso local/acadêmico. Se quiser gerar um valor próprio (recomendado fora do contexto da disciplina), use:
+
+```bash
+ruby -rsecurerandom -e "puts SecureRandom.hex(64)"
+```
+
+e cole o resultado como valor de `SESSION_SECRET` no `.env`.
+
+> Sem o arquivo `.env`, a aplicação (e os testes) não iniciam — em vez de usar um segredo padrão inseguro, ela mostra um erro claro pedindo para criar o `.env`.
+
+---
+
 ## Configuração do banco de dados
 
 O projeto usa **SQLite** com um arquivo de banco por ambiente (`development`, `test` e `production`), definidos em `config/database.rb`. Não é necessário criar o banco manualmente: basta rodar as migrations.
@@ -98,9 +120,16 @@ database: db/development.sqlite3
    up     20260714195306  Create vendas
    up     20260714195632  Create itens venda
    up     20260715001747  Add tipo to usuarios
+   up     20260716120000  Remove tipo from usuarios
 ```
 
-> O ambiente de **teste** usa um banco separado (`db/test.sqlite3`), preparado e limpo automaticamente pela suíte do RSpec — não é preciso rodar as migrations manualmente para ele.
+> O ambiente de **teste** usa um banco separado (`db/test.sqlite3`), que **também precisa ser migrado manualmente** (ele não é versionado no Git e não é criado sozinho):
+>
+> ```bash
+> RACK_ENV=test bundle exec rake db:migrate
+> ```
+>
+> Depois de migrado, a suíte do RSpec cuida de limpar os dados entre os testes automaticamente (cada teste roda dentro de uma transação que é revertida no final).
 
 ---
 
@@ -147,7 +176,7 @@ spec/
 Quando todos os testes passam, a saída final do RSpec é semelhante a:
 
 ```
-15 examples, 0 failures
+75 examples, 0 failures
 ```
 
 ---
@@ -184,12 +213,12 @@ ecommerce-sinatra/
 ## Capturas de tela
 
 ### Tela de cadastro
-Formulário público para criação de conta de **cliente** (o perfil de vendedor não é aberto ao público, apenas criado via seed).
+Formulário público para criação de conta. Qualquer conta criada aqui já pode publicar produtos e/ou comprar — não há um formulário separado para "conta de vendedor".
 
 ![Tela de cadastro](docs/screenshots/cadastro.png)
 
 ### Tela de login
-Autenticação de clientes e vendedores por e-mail e senha.
+Autenticação por e-mail e senha.
 
 ![Tela de login](docs/screenshots/login.png)
 
@@ -222,16 +251,18 @@ Painel do vendedor para acompanhar os pedidos recebidos e avançar ou cancelar o
 
 ## Funcionalidades implementadas
 
-- [x] Cadastro de usuários (perfil cliente)
+- [x] Cadastro de usuários
 - [x] Autenticação por sessão (login/logout)
-- [x] Perfis de acesso distintos: **cliente** e **vendedor**
+- [x] Papel de vendedor/comprador inferido pelas associações — o mesmo usuário pode publicar produtos e também comprar, sem um campo fixo de "tipo de conta"
 - [x] Edição de perfil (dados pessoais e senha)
-- [x] CRUD de produtos (cadastrar, editar, excluir) pelo vendedor
-- [x] Listagem e detalhamento de produtos
+- [x] CRUD de produtos (cadastrar, editar, excluir) pelo próprio vendedor
+- [x] Listagem geral de produtos, com busca por nome
+- [x] Listagem dos produtos do próprio usuário ("Meus Produtos")
 - [x] Carrinho de compras (adicionar e remover itens)
 - [x] Finalização de compra (checkout) com criação da venda
 - [x] Controle de estoque (débito na compra, restauração no cancelamento)
 - [x] Atualização do status da venda (pendente → paga → enviada → entregue, ou cancelada)
+- [x] Cancelamento de compra pelo cliente, somente enquanto o pedido está pendente
 - [x] Histórico de compras do cliente
 - [x] Painel de vendas recebidas do vendedor
 - [x] Validações de dados (e-mail único, campos obrigatórios, senha, estoque disponível)

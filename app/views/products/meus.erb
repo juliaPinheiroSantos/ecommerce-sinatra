@@ -1,0 +1,45 @@
+<div class="auth-card" style="max-width: 900px; text-align: left; margin: 20px auto;">
+  <h2 style="font-family: 'Dancing Script', cursive; color: var(--brand-burgundy); font-size: 3rem; text-align: center; margin-bottom: 20px;">
+    Meus Produtos
+  </h2>
+
+  <div style="text-align: center; margin-bottom: 20px;">
+    <a href="/produtos/novo" class="btn-primary" style="text-decoration: none; display: inline-block; width: auto;">+ Cadastrar Novo Produto</a>
+  </div>
+
+  <% if @produtos.empty? %>
+    <div style="text-align: center; padding: 30px;">
+      <p style="font-size: 1.2rem; color: #666;">Você ainda não cadastrou nenhum produto.</p>
+    </div>
+  <% else %>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+      <thead>
+        <tr style="border-bottom: 2px solid var(--brand-pink); color: var(--brand-burgundy); text-align: left;">
+          <th style="padding: 12px 8px;">Produto</th>
+          <th style="padding: 12px 8px; text-align: right;">Preço</th>
+          <th style="padding: 12px 8px; text-align: center;">Estoque</th>
+          <th style="padding: 12px 8px; text-align: center;">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @produtos.each do |produto| %>
+          <tr style="border-bottom: 1px solid #f2d1d6;">
+            <td style="padding: 15px 8px; font-weight: bold; color: var(--brand-burgundy);">
+              <%= produto.nome %>
+            </td>
+            <td style="padding: 15px 8px; text-align: right;">
+              <%= formatar_moeda(produto.preco) %>
+            </td>
+            <td style="padding: 15px 8px; text-align: center;">
+              <%= produto.estoque %>
+            </td>
+            <td style="padding: 15px 8px; text-align: center; display: flex; justify-content: center; gap: 10px;">
+              <a href="/produtos/<%= produto.id %>" style="color: var(--brand-burgundy); font-weight: bold; text-decoration: none;">Ver</a>
+              <a href="/produtos/<%= produto.id %>/editar" style="color: #666; font-weight: bold; text-decoration: none;">Editar</a>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

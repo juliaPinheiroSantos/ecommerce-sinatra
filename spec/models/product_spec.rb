@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe Product, type: :model do
-  let(:vendedor) { User.create!(nome: "Loja", email: "loja@email.com", password: "123", tipo: "vendedor", cpf: "000.000.000-00") }
+  let(:vendedor) { User.create!(nome: "Loja", email: "loja@email.com", password: "123", cpf: "000.000.000-00") }
   subject { Product.new(nome: "Torta", preco: 10.0, estoque: 5, vendedor: vendedor) }
 
   describe "Validações" do

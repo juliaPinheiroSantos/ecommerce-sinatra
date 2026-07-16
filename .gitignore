@@ -1,1 +1,17 @@
 capybara-*.html
+
+# Segredos locais (nunca versionar; use .env.example como referência)
+.env
+.env.*
+!.env.example
+
+# Bancos de dados locais (gerados via rake db:migrate / rake db:seed)
+db/*.sqlite3
+
+# Bundler / logs / arquivos de sistema
+.bundle/
+log/
+*.log
+tmp/
+.DS_Store
+Thumbs.db

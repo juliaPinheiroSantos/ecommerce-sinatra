@@ -9,11 +9,11 @@ class User < ActiveRecord::Base
   has_many :compras_como_comprador, foreign_key: :comprador_id, class_name: 'Sale', dependent: :destroy
 
   def vendedor?
-    self.tipo == 'vendedor'
+    produtos.exists?
   end
 
   def cliente?
-    self.tipo == 'cliente'
+    compras_como_comprador.exists?
   end
 
   validates :nome, presence: true 

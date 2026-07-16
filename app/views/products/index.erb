@@ -9,9 +9,23 @@
     </div>
   <% end %>
 
+  <form action="/produtos" method="GET" style="max-width: 400px; margin: 0 auto 30px; display: flex; gap: 10px;">
+    <div class="form-group" style="flex: 1; margin: 0;">
+      <label for="busca" style="position: absolute; left: -9999px;">Buscar produtos</label>
+      <input type="text" name="busca" id="busca" value="<%= @termo_busca %>" placeholder="Buscar tortas pelo nome..." style="width: 100%; padding: 10px; border-radius: 8px; border: 2px solid #fad2d9; box-sizing: border-box; font-family: 'Poppins', sans-serif;">
+    </div>
+    <button type="submit" class="btn-primary" style="width: auto; padding: 10px 20px;">Buscar</button>
+  </form>
+
   <div class="products-grid">
     <% if @produtos.empty? %>
-      <p style="text-align: center; grid-column: 1 / -1;">Não há produtos disponíveis no momento.</p>
+      <p style="text-align: center; grid-column: 1 / -1;">
+        <% if @termo_busca.present? %>
+          Nenhum produto encontrado para "<%= @termo_busca %>".
+        <% else %>
+          Não há produtos disponíveis no momento.
+        <% end %>
+      </p>
     <% else %>
       <% @produtos.each do |produto| %>
         <div class="product-card">

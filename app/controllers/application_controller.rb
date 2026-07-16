@@ -9,7 +9,10 @@ class ApplicationController < Sinatra::Base
     set :public_folder, File.expand_path('../../../public', __FILE__)
 
     enable :sessions
-    set :session_secret, 'segredo_super_seguro_para_o_ecommerce_da_disciplina_de_programacao_web_com_sinatra_e_activerecord'
+    session_secret = ENV.fetch('SESSION_SECRET') do
+      raise 'SESSION_SECRET não definida. Copie .env.example para .env e defina um valor (veja o README).'
+    end
+    set :session_secret, session_secret
   end
 
   get '/' do

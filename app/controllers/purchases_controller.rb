@@ -6,7 +6,7 @@ class PurchasesController < ApplicationController
   helpers FlashHelper
 
   get '/compras' do
-    require_cliente!
+    require_login!
     
     @compras = Sale.where(comprador_id: current_user.id).order(created_at: :desc)
     
@@ -14,7 +14,7 @@ class PurchasesController < ApplicationController
   end
 
   get '/compras/:id' do
-    require_cliente!
+    require_login!
     
     @compra = Sale.find_by(id: params[:id], comprador_id: current_user.id)
     
@@ -28,11 +28,15 @@ class PurchasesController < ApplicationController
   end
 
   post '/compras/:id/cancelar' do
-    require_cliente!
-    
+    require_login!
+
     @compra = Sale.find_by(id: params[:id], comprador_id: current_user.id)
 
-    if @compra
+    if @compra.nil?
+      flash_message(:error, "Pedido não encontrado.")
+    elsif @compra.status != 'pendente'
+      flash_message(:error, "Só é possível cancelar pedidos que ainda estão pendentes.")
+    else
       begin
         ::SaleStatusService.new(@compra).cancelar!
         flash_message(:success, "Sua compra ##{@compra.id} foi cancelada. O vendedor foi notificado.")
@@ -40,7 +44,7 @@ class PurchasesController < ApplicationController
         flash_message(:error, "Não foi possível cancelar: #{e.message}")
       end
     end
-    
+
     redirect '/compras'
   end
 end

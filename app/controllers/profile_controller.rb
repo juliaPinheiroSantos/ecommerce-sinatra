@@ -23,6 +23,7 @@ class ProfileController < ApplicationController
     end
 
     if @user.save
+      flash_message(:success, "Perfil atualizado com sucesso!")
       redirect '/perfil'
     else
       @erros = @user.errors.full_messages

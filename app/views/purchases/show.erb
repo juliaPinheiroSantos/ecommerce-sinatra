@@ -35,8 +35,8 @@
   </div>
 
   <div style="margin-top: 40px; text-align: center;">
-    <% if ['pendente', 'paga'].include?(@compra.status) %>
-      <p style="font-size: 0.85rem; color: #666; margin-bottom: 15px;">Ainda dá tempo de mudar de ideia antes de enviarmos.</p>
+    <% if @compra.status == 'pendente' %>
+      <p style="font-size: 0.85rem; color: #666; margin-bottom: 15px;">Ainda dá tempo de mudar de ideia antes do pagamento ser confirmado.</p>
       <form action="/compras/<%= @compra.id %>/cancelar" method="POST" onsubmit="return confirm('Tem certeza que deseja cancelar esta compra?');">
         <button type="submit" style="background-color: #c91e36; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; font-family: 'Poppins', sans-serif;">
           Cancelar Minha Compra
@@ -44,8 +44,10 @@
       </form>
     <% elsif @compra.status == 'cancelada' %>
       <p style="color: #c91e36; font-weight: bold; padding: 10px; background-color: #ffeef0; border-radius: 8px;">Este pedido foi cancelado.</p>
+    <% elsif @compra.status == 'entregue' %>
+      <p style="color: #1e8e3e; font-weight: bold; padding: 10px; background-color: #e6f4ea; border-radius: 8px;">Este pedido já foi entregue.</p>
     <% else %>
-      <p style="color: #1e8e3e; font-weight: bold; padding: 10px; background-color: #e6f4ea; border-radius: 8px;">Este pedido já está em rota ou foi entregue.</p>
+      <p style="color: #1e8e3e; font-weight: bold; padding: 10px; background-color: #e6f4ea; border-radius: 8px;">Este pedido já está sendo preparado e não pode mais ser cancelado.</p>
     <% end %>
   </div>
 </div>
