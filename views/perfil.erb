@@ -1,0 +1,31 @@
+<section>
+    <h2>Meu Perfil</h2>
+    <p>Atualize suas informações pessoais abaixo.</p>
+
+    <form action="/perfil" method="POST">
+        <!-- O input hidden simula o envio do ID para atualizar no banco depois -->
+        <input type="hidden" name="_method" value="PUT">
+        
+        <div>
+            <label for="nome">Nome completo:</label><br>
+            <input type="text" id="nome" name="nome" required>
+        </div>
+        <br>
+        <div>
+            <label for="email">E-mail (Não pode ser alterado):</label><br>
+            <input type="email" id="email" name="email" disabled>
+        </div>
+        <br>
+        <div>
+            <label for="telefone">Telefone:</label><br>
+            <input type="text" id="telefone" name="telefone">
+        </div>
+        <br>
+        <div>
+            <label for="senha">Nova Senha (deixe em branco para manter a atual):</label><br>
+            <input type="password" id="senha" name="senha">
+        </div>
+        <br>
+        <button type="submit">Salvar Alterações</button>
+    </form>
+</section>

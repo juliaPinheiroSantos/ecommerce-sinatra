@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>E-commerce - Programação Web</title>
+</head>
+<body>
+
+    <header>
+        <h1>Lojinha Web</h1>
+        <nav>
+    <a href="/">Vitrine</a>
+    <% if session[:usuario_id] %>
+        <!-- Aparece só para quem está logado -->
+        <a href="/perfil">Meu Perfil</a>
+        <a href="/logout">Sair</a>
+    <% else %>
+        <!-- Aparece para visitantes -->
+        <a href="/login">Entrar</a>
+        <a href="/cadastro">Cadastrar-se</a>
+    <% end %>
+</nav>
+    </header>
+
+    <% if flash[:notice] %>
+        <div style="color: green;"><%= flash[:notice] %></div>
+    <% end %>
+    <% if flash[:error] %>
+        <div style="color: red;"><%= flash[:error] %></div>
+    <% end %>
+
+    <main>
+        <%= yield %>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 - Sistema de E-commerce</p>
+    </footer>
+
+</body>
+</html>
